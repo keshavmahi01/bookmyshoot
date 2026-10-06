@@ -1,0 +1,478 @@
+@import "tailwindcss";
+
+@theme {
+  /* Dark is the base theme. Light is an override further down. */
+  --color-ink: #f3f1f8;
+  --color-ink-soft: #b7b3c6;
+  --color-ink-faint: #857f99;
+  --color-line: #2b2936;
+  --color-line-soft: #22202b;
+  --color-paper: #0f0e13;
+  --color-surface: #17161d;
+  --color-sand: #1c1b24;
+  --color-brand: #8b5cf6;
+  --color-brand-soft: #1d1630;
+  --color-brand-deep: #a78bfa;
+  --color-gold: #e6c25a;
+  --color-green: #4ade80;
+  --color-green-soft: #11291d;
+  --color-info: #c4b5fd;
+  --color-info-soft: #1d1733;
+  --color-glow: 139 92 246;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ------------------------------------------------------------------ theme
+   The site opens dark. Anyone who prefers light can switch in the header and
+   the choice is remembered. Only these values change, so every component
+   follows along on its own. */
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  :root[data-theme="light"] {
+    --color-ink: #15131c;
+    --color-ink-soft: #504d60;
+    --color-ink-faint: #807c93;
+    --color-line: #e5e2ef;
+    --color-line-soft: #efedf6;
+    --color-paper: #fbfaff;
+    --color-surface: #ffffff;
+    --color-sand: #f5f3fb;
+    --color-brand: #6d28d9;
+    --color-brand-soft: #f4f0ff;
+    --color-brand-deep: #5b21b6;
+    --color-gold: #a16207;
+    --color-green: #15803d;
+    --color-green-soft: #ecfdf3;
+    --color-info: #5b21b6;
+    --color-info-soft: #f4f0ff;
+    --color-glow: 109 40 217;
+    color-scheme: light;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Form controls share one look across the site. */
+.field {
+  width: 100%;
+  border: 1px solid var(--color-line);
+  border-radius: 0.6rem;
+  background: var(--color-surface);
+  padding: 0.6rem 0.75rem;
+  font-size: 0.95rem;
+  color: var(--color-ink);
+  outline: none;
+}
+.field:focus {
+  border-color: var(--color-brand);
+  box-shadow: 0 0 0 3px rgb(var(--color-glow) / 0.18);
+}
+.field-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  margin-bottom: 0.35rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.6rem;
+  padding: 0.65rem 1.1rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.btn-primary {
+  background: var(--color-brand);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--color-brand-deep);
+}
+.btn-ghost {
+  background: var(--color-surface);
+  border-color: var(--color-line);
+  color: var(--color-ink);
+}
+.btn-ghost:hover {
+  border-color: var(--color-ink-faint);
+}
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 0.9rem;
+}
+
+.prose-page h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 0.6rem;
+}
+.prose-page p {
+  color: var(--color-ink-soft);
+  line-height: 1.7;
+  margin-bottom: 0.9rem;
+}
+.prose-page ul {
+  list-style: disc;
+  padding-left: 1.2rem;
+  color: var(--color-ink-soft);
+  line-height: 1.7;
+  margin-bottom: 0.9rem;
+}
+.prose-page li {
+  margin-bottom: 0.35rem;
+}
+
+/* ---------------------------------------------------------------- motion
+   Small, calm movement only. Everything here switches off for anyone who
+   has asked their device to reduce motion. */
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes pop {
+  0%   { transform: scale(0.7); opacity: 0; }
+  60%  { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+@keyframes shimmer {
+  from { background-position: -420px 0; }
+  to   { background-position: 420px 0; }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-10px) rotate(2deg); }
+}
+
+.animate-rise > * {
+  animation: rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.animate-rise > *:nth-child(1) { animation-delay: 0.02s; }
+.animate-rise > *:nth-child(2) { animation-delay: 0.07s; }
+.animate-rise > *:nth-child(3) { animation-delay: 0.12s; }
+.animate-rise > *:nth-child(4) { animation-delay: 0.17s; }
+.animate-rise > *:nth-child(5) { animation-delay: 0.22s; }
+.animate-rise > *:nth-child(n + 6) { animation-delay: 0.26s; }
+
+.animate-self {
+  animation: rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-pop {
+  animation: pop 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.float-slow {
+  animation: float-slow 9s ease-in-out infinite;
+}
+
+.card {
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.btn {
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.12s ease;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+
+a,
+summary {
+  transition: color 0.15s ease;
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-line-soft) 25%,
+    var(--color-surface) 50%,
+    var(--color-line-soft) 75%
+  );
+  background-size: 840px 100%;
+  animation: shimmer 1.3s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------------------------- hero: camera and strip */
+
+.blur-strip figure {
+  filter: blur(22px) saturate(1.05);
+  opacity: 0.22;
+}
+:root[data-theme="light"] .blur-strip figure {
+  opacity: 0.32;
+}
+
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+.marquee-left {
+  width: max-content;
+  animation: marquee-left 70s linear infinite;
+}
+.marquee-right {
+  width: max-content;
+  animation: marquee-right 90s linear infinite;
+}
+
+.hero-rig {
+  position: absolute;
+  right: 2%;
+  top: 2rem;
+}
+
+.hero-beam {
+  animation: beam-sway 9s ease-in-out infinite;
+}
+@keyframes beam-sway {
+  0%, 100% { transform: rotate(-1.2deg); opacity: 0.72; }
+  50%      { transform: rotate(1.2deg); opacity: 1; }
+}
+
+.hero-lens {
+  animation: lens-pulse 9s ease-in-out infinite;
+}
+@keyframes lens-pulse {
+  0%, 100% { opacity: 0.7; }
+  50%      { opacity: 1; }
+}
+
+/* The search panel sits where the light lands, so it carries a soft glow. */
+.search-panel {
+  position: relative;
+  border-color: rgb(var(--color-glow) / 0.3);
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.04),
+    0 18px 50px -24px rgb(var(--color-glow) / 0.6);
+}
+.search-panel::before {
+  content: "";
+  position: absolute;
+  inset: -28px -24px 10px -24px;
+  border-radius: 28px;
+  background: radial-gradient(60% 70% at 72% 12%, rgb(var(--color-glow) / 0.2), transparent 70%);
+  filter: blur(8px);
+  z-index: -1;
+  animation: panel-glow 9s ease-in-out infinite;
+}
+@keyframes panel-glow {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+.search-panel:focus-within {
+  border-color: rgb(var(--color-glow) / 0.55);
+}
+
+/* ------------------------------------------------------------------ hover */
+
+/* A highlighted word, with the underline filling in on hover. */
+.hl {
+  position: relative;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+.hl::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.04em;
+  height: 0.16em;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgb(var(--color-glow) / 0.85), rgb(var(--color-glow) / 0.3));
+  opacity: 0.35;
+  transform-origin: left;
+  transition: opacity 0.3s ease;
+}
+.hl:hover {
+  color: var(--color-brand);
+}
+.hl:hover::after {
+  opacity: 1;
+}
+
+/* Header links grow an underline on hover. */
+.nav-link {
+  position: relative;
+  padding-bottom: 2px;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--color-brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Cards lift a little and their picture leans in. */
+.lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px -22px rgb(0 0 0 / 0.35);
+  border-color: rgb(var(--color-glow) / 0.4);
+}
+.lift img {
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.lift:hover img {
+  transform: scale(1.04);
+}
+
+/* Buttons catch the light as the pointer passes. */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgb(255 255 255 / 0.25), transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.55s ease;
+}
+.btn-primary:hover::after {
+  transform: translateX(120%);
+}
+
+/* One button, two icons: CSS picks the one that matches the theme, so the
+   markup never differs between the server and the browser. */
+.theme-toggle > svg {
+  grid-area: 1 / 1;
+}
+.icon-sun { display: none; }
+.icon-moon { display: block; }
+:root[data-theme="light"] .icon-sun { display: block; }
+:root[data-theme="light"] .icon-moon { display: none; }
+
+/* --------------------------------------------------- hero photo slideshow */
+
+.hero-show-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.08);
+  filter: saturate(1.05);
+  transition: opacity 1.5s ease, transform 9s linear;
+}
+.hero-show-img.is-on {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* The text sits in the middle, so the scrim is heaviest there and the photo
+   stays visible around the edges. */
+.hero-show-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      78% 66% at 50% 46%,
+      color-mix(in srgb, var(--color-paper) 88%, transparent) 0%,
+      color-mix(in srgb, var(--color-paper) 72%, transparent) 55%,
+      color-mix(in srgb, var(--color-paper) 42%, transparent) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-paper) 70%, transparent) 0%,
+      transparent 22%,
+      transparent 68%,
+      var(--color-paper) 100%
+    );
+}
+
+/* A horizontal row people can swipe, with no scrollbar showing. */
+.slider-track {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.slider-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Section headings get a small brand rule above them. */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-brand);
+}
+.eyebrow::before {
+  content: "";
+  width: 1.6rem;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--color-brand);
+}
